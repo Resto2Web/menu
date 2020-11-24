@@ -3,6 +3,7 @@
 namespace Resto2web\Menu;
 
 use Illuminate\Support\ServiceProvider;
+use Yoeunes\Notify\NotifyServiceProvider;
 
 class MenuServiceProvider extends ServiceProvider
 {
@@ -15,9 +16,10 @@ class MenuServiceProvider extends ServiceProvider
          * Optional methods to load your package assets
          */
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'menu');
-        // $this->loadViewsFrom(__DIR__.'/../resources/views', 'menu');
-        // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        // $this->loadRoutesFrom(__DIR__.'/routes.php');
+         $this->loadViewsFrom(__DIR__.'/../resources/views/admin', 'resto2web-admin');
+         $this->loadViewsFrom(__DIR__.'/../resources/views/website', 'resto2web');
+         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
@@ -56,5 +58,6 @@ class MenuServiceProvider extends ServiceProvider
         $this->app->singleton('menu', function () {
             return new Menu;
         });
+
     }
 }
