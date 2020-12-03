@@ -17,6 +17,9 @@
     ],
     "require": {
         "php": "^7.4",
+        "ext-json": "*",
+        "anlutro/l4-settings": "^1.0",
+        "bumbummen99/shoppingcart": "^3.0",
         "illuminate/support": "^8.0",
         "laravelcollective/html": "^6.2",
         "resto2web/admin": "dev-develop",
@@ -31,7 +34,10 @@
     "autoload": {
         "psr-4": {
             "Resto2web\\Menu\\": "src"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

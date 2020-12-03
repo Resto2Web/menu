@@ -96,7 +96,7 @@
     </div>
 @endsection
 
-@section('scripts')
+@push('scripts')
     <script>
         var el = document.getElementById('meals');
         var sortable = Sortable.create(el, {
@@ -104,7 +104,7 @@
             // Element dragging ended
             onEnd: function (/**Event*/evt) {
                 if (evt.oldIndex !== evt.newIndex) {
-                    axios.patch('/dashboard/meals/position/' + evt['item'].dataset.lineId, {
+                    axios.patch('/admin/meals/position/' + evt['item'].dataset.lineId, {
                             'new_pos': evt.newIndex + 1
                         }
                     ).then(response => {
@@ -117,5 +117,5 @@
             handle: ".my-handle"
         });
     </script>
-@stop
+@endpush
 

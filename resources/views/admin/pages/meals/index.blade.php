@@ -56,28 +56,8 @@
                                 </td>
                                 <td class="align-middle">{{ $meal->formattedPrice }}</td>
                                 <td class="align-middle text-center">
-                                    {{--                            <form action="{{ route('admin.meals.availability',$meal->id) }}" method="post"--}}
-                                    {{--                                  id="mealAvailabilityForm{{ $meal->id }}" class="mealAvailabilityForm d-inline"--}}
-                                    {{--                                  data-id="{{ $meal->id }}">--}}
-                                    {{--                                <button id="mealAvailableBtn{{ $meal->id }}" type="submit"--}}
-                                    {{--                                        class="btn btn-{{$meal->available ? "success" : "danger"}} btn-sm">--}}
-                                    {{--                                    @method('PATCH')--}}
-                                    {{--                                    @csrf--}}
-                                    {{--                                    <i id="mealAvailableIcon{{ $meal->id }}"--}}
-                                    {{--                                       class="fa {{$meal->available ? "fa-check" : "fa-times"}}"></i>--}}
-                                    {{--                                </button>--}}
-                                    {{--                            </form>--}}
-                                    {{--                <form action="{{ route('admin.meals.enable',$meal->id) }}" method="post"--}}
-                                    {{--                      id="mealEnableyForm{{ $meal->id }}" class="mealEnableForm d-inline"--}}
-                                    {{--                      data-id="{{ $meal->id }}">--}}
-                                    {{--                    <button type="submit" id="mealEnabledBtn{{ $meal->id }}"--}}
-                                    {{--                            class="btn btn-{{$meal->enabled ? "success" : "danger"}} btn-sm">--}}
-                                    {{--                        @method('PATCH')--}}
-                                    {{--                        @csrf--}}
-                                    {{--                        <i id="mealEnabledIcon{{ $meal->id }}"--}}
-                                    {{--                           class="fa {{$meal->enabled ? "fa-check" : "fa-times"}}"></i>--}}
-                                    {{--                    </button>--}}
-                                    {{--                </form>--}}
+                                    <i id="mealAvailableIcon{{ $meal->id }}" class="fa {{$meal->active ? "fa-check" : "fa-times"}}"></i>
+
                                 </td>
                                 <td class="text-right align-middle">
                                     <a class="btn btn-sm btn-primary" href="{{ route('admin.meals.edit', $meal) }}"><i

@@ -1,8 +1,6 @@
 @extends('resto2web-admin::layout.layout')
 
 @section("content")
-
-
     <div class="card shadow mb-4">
         <div class="card-header">
             <div class="d-flex align-items-center">

@@ -91,7 +91,7 @@
             // Element dragging ended
             onEnd: function (/**Event*/evt) {
                 if (evt.oldIndex !== evt.newIndex){
-                    axios.patch('/dashboard/meal-categories/position/' + evt['item'].dataset.lineId, {
+                    axios.patch('/admin/meal-categories/position/' + evt['item'].dataset.lineId, {
                             'new_pos': evt.newIndex + 1
                         }
                     ).then(response => {

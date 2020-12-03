@@ -2,10 +2,10 @@
 
 namespace Resto2web\Menu\Admin\Meals\Controllers;
 
-use Domain\Meals\Actions\UpdateMealPositionAction;
-use Domain\Meals\Models\Meal;
-use App\Common\Controllers\Controller;
 use Illuminate\Http\Request;
+use Resto2web\Core\Common\Controllers\Controller;
+use Resto2web\Menu\Domain\Menu\Actions\UpdateMealPositionAction;
+use Resto2web\Menu\Domain\Menu\Models\Meal;
 
 class MealsPositionController extends Controller
 {

@@ -3,6 +3,9 @@
 namespace Resto2web\Menu;
 
 use Illuminate\Support\ServiceProvider;
+use Livewire\Livewire;
+use Resto2web\Menu\Website\Components\CartSidebar;
+use Resto2web\Menu\Website\Components\MealItem;
 use Yoeunes\Notify\NotifyServiceProvider;
 
 class MenuServiceProvider extends ServiceProvider
@@ -20,6 +23,11 @@ class MenuServiceProvider extends ServiceProvider
          $this->loadViewsFrom(__DIR__.'/../resources/views/website', 'resto2web');
          $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
          $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+
+
+        Livewire::component('website.components.cart-sidebar', CartSidebar::class);
+        Livewire::component('website.components.meal-item', MealItem::class);
+        require "helpers.php";
 
         if ($this->app->runningInConsole()) {
             $this->publishes([

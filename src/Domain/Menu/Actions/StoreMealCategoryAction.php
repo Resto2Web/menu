@@ -12,6 +12,7 @@ class StoreMealCategoryAction
 {
     public static function execute(MealCategoryData $data)
     {
+        $data->position = MealCategory::count() + 1;
         return MealCategory::create($data->toArray());
     }
 }

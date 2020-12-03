@@ -4,7 +4,7 @@
 namespace Resto2web\Menu\Domain\Menu\Actions;
 
 
-use App\Domain\Meals\Models\MealCategory;
+use Resto2web\Menu\Domain\Menu\Models\MealCategory;
 
 class RefreshMealsPositionInCategoryAction
 {
