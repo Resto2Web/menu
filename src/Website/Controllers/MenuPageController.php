@@ -6,7 +6,7 @@ namespace Resto2web\Menu\Website\Controllers;
 
 use Artesaos\SEOTools\Traits\SEOTools;
 use Resto2web\Core\Common\Controllers\Controller;
-use Resto2web\Menu\Domain\Menu\Models\MealCategory;
+use Resto2web\Menu\Domain\Meals\Models\MealCategory;
 
 class MenuPageController extends Controller
 {
@@ -14,7 +14,7 @@ class MenuPageController extends Controller
     public function __invoke()
     {
         $mealCategories = MealCategory::all();
-        $this->seo()->setTitle('Menu');
+        $this->seo()->setTitle('Meals');
         return view('resto2web::pages.menu')
             ->with(compact('mealCategories'));
     }

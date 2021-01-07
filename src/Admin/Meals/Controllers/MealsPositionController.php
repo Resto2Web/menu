@@ -4,8 +4,8 @@ namespace Resto2web\Menu\Admin\Meals\Controllers;
 
 use Illuminate\Http\Request;
 use Resto2web\Core\Common\Controllers\Controller;
-use Resto2web\Menu\Domain\Menu\Actions\UpdateMealPositionAction;
-use Resto2web\Menu\Domain\Menu\Models\Meal;
+use Resto2web\Menu\Domain\Meals\Actions\UpdateMealPositionAction;
+use Resto2web\Menu\Domain\Meals\Models\Meal;
 
 class MealsPositionController extends Controller
 {

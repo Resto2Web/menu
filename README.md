@@ -1,4 +1,4 @@
-# Very short description of the package
+# Menu package for the Resto2Web system
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/resto2web/menu.svg?style=flat-square)](https://packagist.org/packages/resto2web/menu)
 [![Build Status](https://img.shields.io/travis/resto2web/menu/master.svg?style=flat-square)](https://travis-ci.org/resto2web/menu)
@@ -15,18 +15,6 @@ You can install the package via composer:
 composer require resto2web/menu
 ```
 
-## Usage
-
-``` php
-// Usage description here
-```
-
-### Testing
-
-``` bash
-composer test
-```
-
 ### Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
@@ -41,13 +29,9 @@ If you discover any security related issues, please email lucas@retinens.be inst
 
 ## Credits
 
-- [Lucas Houssa](https://github.com/resto2web)
+- [Lucas Houssa](https://github.com/WhereIsLucas)
 - [All Contributors](../../contributors)
 
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-
-## Laravel Package Boilerplate
-
-This package was generated using the [Laravel Package Boilerplate](https://laravelpackageboilerplate.com).

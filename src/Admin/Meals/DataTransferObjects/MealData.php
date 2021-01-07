@@ -18,6 +18,7 @@ class MealData extends DataTransferObject
     public ?int $meal_category_id;
     public int $position = 1;
     public bool $active;
+    public bool $available;
 
     public static function fromRequest(FormRequest $request)
     {
@@ -30,6 +31,7 @@ class MealData extends DataTransferObject
             "meal_category_id" => ((int) $request->input('meal_category_id')) ?? null,
             'position' => 1,
             'active' => $request->has('active'),
+            'available' => $request->has('available'),
         ]);
     }
 

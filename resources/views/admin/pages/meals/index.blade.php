@@ -35,7 +35,7 @@
                             <th>Description</th>
                             <th>Catégorie</th>
                             <th>Prix</th>
-                            <th class="text-center">Activé</th>
+                            <th class="text-center">Activé | Dispo</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -56,7 +56,8 @@
                                 </td>
                                 <td class="align-middle">{{ $meal->formattedPrice }}</td>
                                 <td class="align-middle text-center">
-                                    <i id="mealAvailableIcon{{ $meal->id }}" class="fa {{$meal->active ? "fa-check" : "fa-times"}}"></i>
+                                    <i id="mealActiveIcon{{ $meal->id }}" class="fa {{$meal->active ? "fa-check" : "fa-times"}}"></i>
+                                    <i id="mealAvailableIcon{{ $meal->id }}" class="fa {{$meal->available ? "fa-check" : "fa-times"}}"></i>
 
                                 </td>
                                 <td class="text-right align-middle">

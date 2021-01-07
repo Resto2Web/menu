@@ -8,10 +8,10 @@ use Resto2web\Core\Common\Controllers\Controller;
 use Resto2web\Menu\Admin\Meals\DataTransferObjects\MealCategoryData;
 use Resto2web\Menu\Admin\Meals\Requests\StoreMealCategoryRequest;
 use Resto2web\Menu\Admin\Meals\Requests\UpdateMealCategoryRequest;
-use Resto2web\Menu\Domain\Menu\Actions\DestroyMealCategoryAction;
-use Resto2web\Menu\Domain\Menu\Actions\StoreMealCategoryAction;
-use Resto2web\Menu\Domain\Menu\Actions\UpdateMealCategoryAction;
-use Resto2web\Menu\Domain\Menu\Models\MealCategory;
+use Resto2web\Menu\Domain\Meals\Actions\DestroyMealCategoryAction;
+use Resto2web\Menu\Domain\Meals\Actions\StoreMealCategoryAction;
+use Resto2web\Menu\Domain\Meals\Actions\UpdateMealCategoryAction;
+use Resto2web\Menu\Domain\Meals\Models\MealCategory;
 
 
 class MealCategoriesController extends Controller

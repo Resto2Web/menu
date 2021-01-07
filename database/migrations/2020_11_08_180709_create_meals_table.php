@@ -24,6 +24,7 @@ class CreateMealsTable extends Migration
             $table->json('options')->nullable();
             $table->integer('position')->default(1);
             $table->boolean('active')->default(true);
+            $table->boolean('available')->default(true);
             $table->timestamps();
         });
     }

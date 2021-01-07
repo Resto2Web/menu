@@ -7,12 +7,12 @@ use Resto2web\Core\Common\Controllers\Controller;
 use Resto2web\Menu\Admin\Meals\DataTransferObjects\MealData;
 use Resto2web\Menu\Admin\Meals\Requests\StoreMealRequest;
 use Resto2web\Menu\Admin\Meals\Requests\UpdateMealRequest;
-use Resto2web\Menu\Domain\Menu\Actions\DestroyMealAction;
-use Resto2web\Menu\Domain\Menu\Actions\ProcessMealImageAction;
-use Resto2web\Menu\Domain\Menu\Actions\StoreMealAction;
-use Resto2web\Menu\Domain\Menu\Actions\UpdateMealAction;
-use Resto2web\Menu\Domain\Menu\Models\Meal;
-use Resto2web\Menu\Domain\Menu\Models\MealCategory;
+use Resto2web\Menu\Domain\Meals\Actions\DestroyMealAction;
+use Resto2web\Menu\Domain\Meals\Actions\ProcessMealImageAction;
+use Resto2web\Menu\Domain\Meals\Actions\StoreMealAction;
+use Resto2web\Menu\Domain\Meals\Actions\UpdateMealAction;
+use Resto2web\Menu\Domain\Meals\Models\Meal;
+use Resto2web\Menu\Domain\Meals\Models\MealCategory;
 
 class MealsController extends Controller
 {

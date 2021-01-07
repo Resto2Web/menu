@@ -4,8 +4,12 @@ namespace Resto2web\Menu;
 
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
+use Resto2web\Menu\Admin\Meals\Components\MealOptionsComponent;
+use Resto2web\Menu\Website\Components\Cart\CartMealItemComponent;
 use Resto2web\Menu\Website\Components\CartSidebar;
-use Resto2web\Menu\Website\Components\MealItem;
+use Resto2web\Menu\Website\Components\Checkout\Checkout;
+use Resto2web\Menu\Website\Components\Menu\MenuMealItem;
+use Resto2web\Menu\Website\Components\Menu\MenuMealOptionsModal;
 use Yoeunes\Notify\NotifyServiceProvider;
 
 class MenuServiceProvider extends ServiceProvider
@@ -26,7 +30,13 @@ class MenuServiceProvider extends ServiceProvider
 
 
         Livewire::component('website.components.cart-sidebar', CartSidebar::class);
-        Livewire::component('website.components.meal-item', MealItem::class);
+        Livewire::component('website.components.cart.meal-item', CartMealItemComponent::class);
+        Livewire::component('website.components.menu.meal-item', MenuMealItem::class);
+        Livewire::component('website.components.menu.meal-options-modal', MenuMealOptionsModal::class);
+        Livewire::component('website.components.checkout', Checkout::class);
+
+        Livewire::component('admin.meals.components.meal-options', MealOptionsComponent::class);
+
         require "helpers.php";
 
         if ($this->app->runningInConsole()) {

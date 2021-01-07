@@ -7,9 +7,9 @@
             <div class="col-lg-8">
                 @foreach ($mealCategories as $category)
                     <h2>{{ $category->name }}</h2>
-                    <ul>
-                        @foreach ($category->meals as $meal)
-                            @livewire('website.components.meal-item',compact('meal'),key($meal->id))
+                    <ul class="list-unstyled">
+                        @foreach ($category->active_meals as $meal)
+                            @livewire('website.components.menu.meal-item',compact('meal'),key($meal->id))
                         @endforeach
                     </ul>
                     <hr>
@@ -41,5 +41,14 @@
             resizeSensor: true,
             minWidth: 991,
         });
+
+        $(document).ready(function () {
+            window.livewire.on('updatedCart',function () {
+                if(typeof sidebar !== 'undefined'){
+                    sidebar.updateSticky();
+                }
+            })
+
+        })
     </script>
 @endpush

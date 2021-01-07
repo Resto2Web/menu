@@ -40,6 +40,10 @@
                         {{ Form::checkbox('active','active',$meal->active ?? true,['class'=> 'custom-control-input','id'=> 'active']) }}
                         {{ Form::label('active','Activé (visible ou non sur le site)',['class'=> 'custom-control-label']) }}
                     </div>
+                    <div class="custom-control custom-switch">
+                        {{ Form::checkbox('available','available',$meal->available ?? true,['class'=> 'custom-control-input','id'=> 'available']) }}
+                        {{ Form::label('available','Disponible à la commande',['class'=> 'custom-control-label']) }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -60,6 +64,11 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="col-12">
+        @isset ($meal)
+            @livewire('admin.meals.components.meal-options',compact('meal'))
+        @endisset
     </div>
 {{--    <div class="col-md-6">--}}
 {{--        <div class="card shadow mb-4">--}}
