@@ -15,6 +15,7 @@ class CartOrderHelper
     public MenuSettings $settings;
 
     const BASE_KEY = 'order';
+
     const DELIVERY = "delivery";
     const TAKEAWAY = "takeaway";
 
@@ -29,7 +30,7 @@ class CartOrderHelper
         if (self::getSettings()->onlyTakeaway()) {
             return false;
         }
-        return self::get('type') == self::DELIVERY;
+        return self::getType() == self::DELIVERY;
     }
 
     public static function isTakeaway(): bool
@@ -40,7 +41,7 @@ class CartOrderHelper
         if (self::getSettings()->onlyTakeaway()) {
             return true;
         }
-        return self::get('type') == self::TAKEAWAY;
+        return self::getType() == self::TAKEAWAY;
     }
 
     public static function setType($type)
@@ -48,7 +49,7 @@ class CartOrderHelper
         self::set('type', $type);
     }
 
-    public static function getType()
+    public static function getType() : string
     {
         $default = self::getDefaultOrderType();
         return self::get('type', $default);
@@ -83,7 +84,7 @@ class CartOrderHelper
         return false;
     }
 
-    public static function getDeliveryPrice()
+    public static function getDeliveryPrice() : float
     {
         return GetDeliveryPriceAction::execute();
     }

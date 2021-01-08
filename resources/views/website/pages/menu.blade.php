@@ -3,7 +3,7 @@
 @section('content')
     <div class="container py-6">
         <h1>Menu du restaurant</h1>
-        <div class="row">
+        <div class="row" id="main-content">
             <div class="col-lg-8">
                 @foreach ($mealCategories as $category)
                     <h2>{{ $category->name }}</h2>
@@ -18,9 +18,6 @@
             <div id="sidebar" class="col-lg-4 sidebar p-0">
                 <div class="p-3" id="sidebar__inner">
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="mb-0">Résumé de ma commande</h3>
-                        </div>
                         <div class="card-body">
                             @livewire('website.components.cart-sidebar')
                         </div>

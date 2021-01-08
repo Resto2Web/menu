@@ -10,7 +10,7 @@ use Resto2web\Menu\Domain\Cart\Actions\GetCartTotalWithDeliveryAction;
 use Resto2web\Menu\Domain\Meals\Models\Meal;
 use Resto2web\Menu\Domain\Utility\Helpers\CartOrderHelper;
 
-class MenuMealItem extends Component
+class MenuMealItemComponent extends Component
 {
     public Meal $meal;
 

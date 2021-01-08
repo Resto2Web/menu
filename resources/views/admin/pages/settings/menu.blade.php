@@ -9,11 +9,15 @@
 @endsection
 
 @section('content')
+    @include('resto2web-admin::pages.settings.partials.topMenu')
+
     <div class="card">
         <div class="card-body">
             <form action="{{ route('admin.settings.menu') }}" method="post" class="form-validate">
                 @method("PATCH")
                 @csrf
+                @include('resto2web-admin::layout.alerts')
+
                 <div class="form-group">
                     {!! Form::label('minimumOrder','Commande minimale') !!}
                     {!! Form::number('minimumOrder',$settings->minimumOrder, ['class'=> 'form-control']) !!}

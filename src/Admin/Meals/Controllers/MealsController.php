@@ -4,7 +4,7 @@ namespace Resto2web\Menu\Admin\Meals\Controllers;
 
 
 use Resto2web\Core\Common\Controllers\Controller;
-use Resto2web\Menu\Admin\Meals\DataTransferObjects\MealData;
+use Resto2web\Menu\Domain\Meals\DataTransferObjects\MealData;
 use Resto2web\Menu\Admin\Meals\Requests\StoreMealRequest;
 use Resto2web\Menu\Admin\Meals\Requests\UpdateMealRequest;
 use Resto2web\Menu\Domain\Meals\Actions\DestroyMealAction;

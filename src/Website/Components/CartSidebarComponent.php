@@ -9,7 +9,7 @@ use Resto2web\Menu\Domain\Cart\Actions\GetCartTotalWithDeliveryAction;
 use Resto2web\Menu\Domain\Utility\Helpers\CartOrderHelper;
 use Resto2web\Menu\Settings\MenuSettings;
 
-class CartSidebar extends Component
+class CartSidebarComponent extends Component
 {
     protected $listeners = ['updatedCart'];
 
@@ -20,6 +20,7 @@ class CartSidebar extends Component
     public bool $hasFreeDeliveryMinimum;
     public float $freeDeliveryMinimum;
     public string $type;
+    public bool $checkout = false;
 
     public function mount()
     {
@@ -56,6 +57,17 @@ class CartSidebar extends Component
     public function updatedType()
     {
         CartOrderHelper::setType($this->type);
+        $this->emit('changedOrderType');
+    }
+
+    public function goCheckout()
+    {
+        if (!$this->checkout && $this->getCanCheckoutProperty()) {
+            redirect(route("checkout.index"));
+        }
+        if ($this->checkout && $this->getCanCheckoutProperty()) {
+            $this->emitUp('checkout');
+        }
     }
 
 

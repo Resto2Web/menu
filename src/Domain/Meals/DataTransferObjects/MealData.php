@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Resto2web\Menu\Admin\Meals\DataTransferObjects;
+namespace Resto2web\Menu\Domain\Meals\DataTransferObjects;
 
 
 use Illuminate\Foundation\Http\FormRequest;
