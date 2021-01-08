@@ -2,7 +2,6 @@
 
 namespace Resto2web\Menu\Settings;
 
-
 use Spatie\LaravelSettings\Settings;
 
 class MenuSettings extends Settings
