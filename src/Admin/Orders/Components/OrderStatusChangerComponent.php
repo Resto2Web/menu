@@ -5,10 +5,11 @@ namespace Resto2web\Menu\Admin\Orders\Components;
 
 
 use Livewire\Component;
+use Resto2web\Menu\Domain\Orders\Actions\CancelOrderAction;
+use Resto2web\Menu\Domain\Orders\Actions\ConfirmOrderAction;
+use Resto2web\Menu\Domain\Orders\Actions\RefuseOrderAction;
+use Resto2web\Menu\Domain\Orders\Actions\ShipOrderAction;
 use Resto2web\Menu\Domain\Orders\Models\Order;
-use Resto2web\Menu\Domain\Orders\States\OrderStatus\Confirmed;
-use Resto2web\Menu\Domain\Orders\States\OrderStatus\Refused;
-use Resto2web\Menu\Domain\Orders\States\OrderStatus\Shipped;
 
 class OrderStatusChangerComponent extends Component
 {
@@ -21,16 +22,21 @@ class OrderStatusChangerComponent extends Component
 
     public function sendOrder()
     {
-        $this->order->status->transitionTo(Shipped::class);
+        ShipOrderAction::execute($this->order);
     }
 
     public function confirmOrder()
     {
-        $this->order->status->transitionTo(Confirmed::class);
+        ConfirmOrderAction::execute($this->order);
     }
 
     public function refuseOrder()
     {
-        $this->order->status->transitionTo(Refused::class);
+        RefuseOrderAction::execute($this->order);
+    }
+
+    public function cancelOrder()
+    {
+        CancelOrderAction::execute($this->order);
     }
 }

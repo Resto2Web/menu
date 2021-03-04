@@ -30,26 +30,42 @@
                                 </div>
                             @endguest
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                {{ Form::label('firstName','Prénom') }}
-                                {{ Form::text('firstName',null,['class'=> 'form-control','wire:model'=> 'firstName']) }}
+                        @guest()
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    {{ Form::label('firstName','Prénom') }}
+                                    {{ Form::text('firstName',null,['class'=> 'form-control','wire:model'=> 'firstName']) }}
+                                </div>
+                                <div class="form-group">
+                                    {{ Form::label('lastName','Nom') }}
+                                    {{ Form::text('lastName',null,['class'=> 'form-control','wire:model'=> 'lastName']) }}
+                                </div>
                             </div>
-                            <div class="form-group">
-                                {{ Form::label('lastName','Nom') }}
-                                {{ Form::text('lastName',null,['class'=> 'form-control','wire:model'=> 'lastName']) }}
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    {{ Form::label('email','Adresse email') }}
+                                    {{ Form::email('email',null,['class'=> 'form-control','wire:model'=> 'email']) }}
+                                </div>
+                                <div class="form-group">
+                                    {{ Form::label('phone_number','Numéro de téléphone') }}
+                                    {{ Form::text('phone_number',null,['class'=> 'form-control','wire:model'=> 'phone_number']) }}
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                {{ Form::label('email','Adresse email') }}
-                                {{ Form::email('email',null,['class'=> 'form-control','wire:model'=> 'email']) }}
+                        @endguest
+
+                        @auth
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    {{ $firstName }} {{ $lastName }}
+                                </div>
+                                <div class="form-group">
+                                    {{ $email }} <br>
+                                    {{ $phone_number }}
+                                </div>
                             </div>
-                            <div class="form-group">
-                                {{ Form::label('phone_number','Numéro de téléphone') }}
-                                {{ Form::text('phone_number',null,['class'=> 'form-control','wire:model'=> 'phone_number']) }}
-                            </div>
-                        </div>
+                        @endauth
+
+
                     </div>
 
                     <div class="row">
@@ -57,26 +73,44 @@
                             <div class="col-12"><p class="h5">Coordonnées de livraison </p></div>
                             @if (Auth::user())
                                 <div class="col-12">
-                                    //TODO adresses enregistées
+                                    @if (Auth::user()->addresses()->count())
+                                        @foreach (Auth::user()->addresses as $address)
+                                            <div class="alert bg-{{ $selectedAddress == $address->id ? 'primary' : 'light' }}" wire:click="selectAddress({{ $address->id }})">
+                                                {{ $address->title }} <br>
+                                                {{ $address->address }} {{ $address->postal_code }} {{ $address->city }}
+                                            </div>
+                                        @endforeach
+                                        <button class="btn btn-primary" wire:click="$set('addNewAddress',true)"> Ajouter une nouvelle adresse</button>
+                                    @endif
                                 </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        {{ Form::label('address','Adresse') }}
-                                        {{ Form::text('address',null,['class'=> 'form-control','wire:model'=> 'address']) }}
+                                @if (!Auth::user()->addresses()->count() || $addNewAddress)
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            {{ Form::label('address','Adresse') }}
+                                            {{ Form::text('address',null,['class'=> 'form-control','wire:model'=> 'address']) }}
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        {{ Form::label('city','Ville') }}
-                                        {{ Form::text('city',null,['class'=> 'form-control','wire:model'=> 'city']) }}
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            {{ Form::label('city','Ville') }}
+                                            {{ Form::text('city',null,['class'=> 'form-control','wire:model'=> 'city']) }}
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        {{ Form::label('postal_code','Code postal') }}
-                                        {{ Form::text('postal_code',null,['class'=> 'form-control','wire:model'=> 'postal_code']) }}
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            {{ Form::label('postal_code','Code postal') }}
+                                            {{ Form::text('postal_code',null,['class'=> 'form-control','wire:model'=> 'postal_code']) }}
+                                        </div>
                                     </div>
-                                </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            {{ Form::checkbox('save_address',null,'',['class'=> '','wire:model'=> 'save_address','id'=> 'save_address']) }}
+                                            {{ Form::label('save_address',"Enregistrer l'adresse pour une autre fois",['for'=> 'save_address']) }}
+                                        </div>
+                                    </div>
+
+                                @endif
+
                             @else
                                 <div class="col-12">
                                     <div class="form-group">

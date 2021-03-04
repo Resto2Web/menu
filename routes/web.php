@@ -32,8 +32,6 @@ Route::middleware('web')->group(function () {
             Route::get('/settings/menu', [MenuSettingsController::class,'show'])->name('settings.menu');
             Route::patch('/settings/menu', [MenuSettingsController::class,'update'])->name('settings.menu');
 
-
-
         });
     });
 });

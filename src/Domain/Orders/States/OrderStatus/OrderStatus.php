@@ -20,6 +20,9 @@ abstract class OrderStatus extends State
                 [Pending::class,Confirmed::class],
                 [Pending::class,Refused::class],
                 [Confirmed::class,Shipped::class],
+                [Pending::class,Canceled::class],
+                [Confirmed::class,Canceled::class],
+                [Refused::class,Canceled::class],
             ])
             ->default(Pending::class)            ;
     }

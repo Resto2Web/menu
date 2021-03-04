@@ -3,12 +3,14 @@
 @section('breadcrumbs')
 
     <li class="breadcrumb-item">
-        <a href="{{ route('admin.orders.index', $order->id) }}">Commandes</a>
+        <a href="{{ route('admin.orders.index') }}">Commandes</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="{{ route('admin.orders.show', $order->id) }}">{{$order->number}}</a>
     </li>
 
-
     <li class="breadcrumb-item active">
-        {{$order->number}}
+        Editer une commande
     </li>
 @endsection
 
@@ -16,7 +18,6 @@
     @include("resto2web-admin::layout.alerts")
     <div class="row">
         <div class="col-md-6">
-
             <div class="card">
                 <div class="card-header">
                     <i class="fa fa-clipboard-list"></i> Contenu de la commande
@@ -45,7 +46,7 @@
                         @foreach ($order->order_items as $item)
                             <tr>
                                 <td>
-                                    {{$item->quantity}}
+                                    <input type="number" value="{{$item->quantity}}" class="form-control">
                                 </td>
                                 <td>
                                     {{$item->name}}
@@ -97,16 +98,43 @@
         </div>
         <div class="col-md-6">
             <div class="col-md">
-
-
                 @livewire('admin.orders.components.edit-order-customer-info',['order'=> $order])
             </div>
             <div class="col-md">
-                @livewire('admin.orders.components.edit-order-delivery-info',['order'=> $order])
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fa fa-map-marker-alt"></i> Détails
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md">
+                                @if ($order->type == 'delivery')
+                                    <p class="h3">A livrer</p>
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            {{ $order->address }}
+                                        </li>
+                                        <li>
+                                            {{ $order->postal_code }}
+                                        </li>
+                                    </ul>
+                                @elseif ($order->type == 'takeaway')
+                                    <p class="h5">A emporter</p>
+                                @endif
+                            </div>
+                            <div class="col-md">
+                                <p> le {{$order->date->format('d/m/Y')}}<br>
+                                    <span class="h3"><span>{{ $order->dateText }}</span></span>
+                                    à <span class="h3">{{$order->time->format('H:i')}}</span>
+                                </p>
+                                <p class="mb-0">
+                                    Paiement {{ strtolower($order->paiement_method_text) }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            @livewire('admin.orders.components.order-status-changer', compact('order'))
         </div>
     </div>
 @endsection

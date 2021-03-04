@@ -8,7 +8,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Resto2web\Menu\Domain\Orders\Models\Order;
 
-class AdminNewOrderNotification extends Notification
+class UserOrderShippedNotification extends Notification
 {
     use Queueable;
 
@@ -47,8 +47,8 @@ class AdminNewOrderNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Vous avez une nouvelle commande '.$this->order->number)
-            ->action('Voir la commande',route('admin.orders.show',$this->order->id));
+            ->subject('Votre commande '.$this->order->number.' est en route')
+            ->line('Votre commande est en route');
     }
 
     /**

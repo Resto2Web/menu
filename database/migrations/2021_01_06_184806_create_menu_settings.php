@@ -12,5 +12,11 @@ class CreateMenuSettings extends SettingsMigration
         $this->migrator->add('menu.hasFreeDeliveryMinimum',false);
         $this->migrator->add('menu.freeDeliveryMinimum',0);
         $this->migrator->add('menu.deliveryPrice',0);
+
+        $this->migrator->add('payments.cashOnDelivery',false);
+        $this->migrator->add('payments.cardOnDelivery',false);
+        $this->migrator->add('payments.acceptsBancontact',false);
+        $this->migrator->add('payments.acceptsVisa',false);
+        $this->migrator->add('payments.online',false);
     }
 }

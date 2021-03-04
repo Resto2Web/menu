@@ -47,8 +47,8 @@ class UserNewOrderNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->line('Thank you for using our application!');
+            ->subject('Merci pour votre commande '.$this->order->number)
+            ->line('En attente de confirmation par le restaurant');
     }
 
     /**

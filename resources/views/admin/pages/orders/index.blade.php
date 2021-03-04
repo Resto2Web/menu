@@ -12,7 +12,6 @@
         <div class="col-md-9">
             <div class="card">
                 <div class="card-body">
-
                     <table class="dataTable table">
                         <thead>
                         <tr>
@@ -36,6 +35,13 @@
                         @endforeach
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <a href="{{ route('admin.orders.create') }}" class="btn btn-primary">Ajouter une commande manuellement</a>
                 </div>
             </div>
         </div>

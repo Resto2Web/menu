@@ -77,7 +77,7 @@ class CartOrderHelper
     }
     public static function hasFreeDelivery(): bool
     {
-        if (self::getSettings()->hasFreeDeliveryMinimum && self::getSettings()->freeDeliveryMinimum <= Cart::subtotal()) {
+        if (self::getSettings()->hasFreeDeliveryMinimum && self::getSettings()->freeDeliveryMinimum <= Cart::subtotal() || self::getSettings()->deliveryPrice == 0) {
             return true;
         }
         //TODO add freeDelivery Gift

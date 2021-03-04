@@ -21,17 +21,25 @@
                 <i class="fa fa-shipping-fast"></i> Cette commande a été envoyée
             </div>
             @break
+            @case('canceled')
+            <div class="alert alert-danger">
+                <i class="fa fa-times"></i> Cette commande a été annulée
+            </div>
+            @break
         @endswitch
     </div>
-    @unless($order->status == 'shipped')
+    @unless($order->status == 'shipped' || $order->status == 'canceled')
         <div class="card">
             <div class="card-header">
                 <i class="fa fa-reply"></i> Actions
             </div>
             <div class="card-body">
+
                 @switch($order->status)
                     @case('pending')
-                    {{ Form::textarea('message',null,['class'=> 'form-control','wire:model'=> "message",'lines'=> 3]) }}
+                    <div class="form-group">
+                        {{ Form::textarea('message',null,['class'=> 'form-control','wire:model'=> "message",'rows'=> 3]) }}
+                    </div>
                     <button class="btn btn-success" wire:click="confirmOrder"><i class="fa fa-check"></i>
                         Confirmer la commande
                     </button>
@@ -51,6 +59,11 @@
                     @default
 
                 @endswitch
+                @if ($order->status != 'canceled')
+                    <button class="btn btn-danger" wire:click="cancelOrder"><i class="fa fa-times"></i>
+                        Annuler la commande
+                    </button>
+                @endif
 
             </div>
         </div>

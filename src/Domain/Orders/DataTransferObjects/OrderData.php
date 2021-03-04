@@ -11,7 +11,7 @@ class OrderData extends \Spatie\DataTransferObject\DataTransferObject
 
     public string $first_name;
     public string $last_name;
-    public string $email;
+    public ?string $email;
     public string $phone_number;
     public string $type;
     public float $delivery;

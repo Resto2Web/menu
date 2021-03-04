@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Resto2web\Menu\Website\Components\Checkout;
+namespace Resto2web\Menu\Admin\Orders\Components;
 
 
 use Carbon\Carbon;
@@ -9,11 +9,10 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 use Livewire\Component;
-use phpDocumentor\Reflection\Types\Integer;
 use Resto2web\Core\Domain\Users\DataTransferObjects\AddressData;
-use Resto2web\Core\Domain\Users\Models\UserAddress;
 use Resto2web\Core\Settings\GeneralSettings;
 use Resto2web\Menu\Admin\Orders\Action\StoreNewOrderAction;
+use Resto2web\Menu\Domain\Cart\Actions\GetCartTotalWithDeliveryAction;
 use Resto2web\Menu\Domain\Meals\Models\Meal;
 use Resto2web\Menu\Domain\Orders\Actions\GenerateFormattedOptionsArrayAction;
 use Resto2web\Menu\Domain\Orders\Actions\GenerateUniqueOrderNumberAction;
@@ -24,63 +23,83 @@ use Resto2web\Menu\Domain\Orders\Models\Order;
 use Resto2web\Menu\Domain\Orders\Models\OrderItem;
 use Resto2web\Menu\Domain\Orders\Notifications\AdminNewOrderNotification;
 use Resto2web\Menu\Domain\Orders\Notifications\UserNewOrderNotification;
+use Resto2web\Menu\Domain\Orders\States\OrderStatus\Confirmed;
 use Resto2web\Menu\Domain\Utility\Helpers\CartOrderHelper;
+use Resto2web\Menu\Settings\MenuSettings;
 
-class CheckoutComponent extends Component
+class CreateOrderSidebarComponent extends Component
 {
+    protected $listeners = ['updatedCart'];
 
-    protected $listeners = [
-        'changedOrderType',
-        'checkout'
-    ];
-
-    public int $currentStep = 1;
-    public string $email;
+    public float $minimumOrder;
+    public bool $onlyDelivery;
+    public bool $onlyTakeaway;
+    public float $deliveryPrice;
+    public bool $hasFreeDeliveryMinimum;
+    public float $freeDeliveryMinimum;
+    public string $first_name;
+    public string $last_name;
     public string $phone_number;
-    public string $firstName;
-    public string $lastName;
     public string $date;
     public string $time;
+
+    public string $type;
     public string $city;
     public string $address;
     public string $postal_code;
-    public bool $schedule = false;
-    public bool $save_address = true;
-    public bool $addNewAddress = false;
-    public ?int $selectedAddress;
+    public bool $checkout = false;
+
 
     public function mount()
     {
-        $this->email = CartOrderHelper::get('contact.email', Auth::user()->email ?? '');
-        $this->phone_number = CartOrderHelper::get('contact.phone_number', Auth::user()->phone_number ?? '');
-        $this->firstName = CartOrderHelper::get('contact.firstName', Auth::user()->first_name ?? '');
-        $this->lastName = CartOrderHelper::get('contact.lastName', Auth::user()->last_name ?? '');
-        $this->date = CartOrderHelper::get('date', '');
-        $this->time = CartOrderHelper::get('time', '');
+        $settings = app(MenuSettings::class);
+        $this->minimumOrder = $settings->minimumOrder;
+        $this->onlyDelivery = $settings->onlyDelivery();
+        $this->onlyTakeaway = $settings->onlyTakeaway();
+        $this->deliveryPrice = $settings->deliveryPrice;
+        $this->hasFreeDeliveryMinimum = $settings->hasFreeDeliveryMinimum;
+        $this->freeDeliveryMinimum = $settings->freeDeliveryMinimum;
+        $this->first_name = CartOrderHelper::get('first_name', '');
+        $this->last_name = CartOrderHelper::get('last_name', '');
         $this->city = CartOrderHelper::get('address.city', '');
         $this->postal_code = CartOrderHelper::get('address.postal_code', '');
         $this->address = CartOrderHelper::get('address.address', '');
-        $this->currentStep = CartOrderHelper::get('currentStep', 1);
-        $this->currentStep = 1;
+        $this->phone_number = CartOrderHelper::get('phone_number', '');
+        $this->type = CartOrderHelper::getType();
     }
 
     public function render()
     {
-        return view('resto2web::pages.checkout.components.checkout-component');
+        return view('resto2web-admin::pages.orders.components.create-order-sidebar-component');
     }
 
-    public function changedOrderType()
+    public function updatedCart()
     {
         $this->render();
+    }
+
+    public function getCanCheckoutProperty()
+    {
+        return (bool) CartOrderHelper::canCheckout() ;
+    }
+
+    public function getTotalWithDeliveryProperty()
+    {
+        return GetCartTotalWithDeliveryAction::execute();
+    }
+
+    public function updatedType()
+    {
+        CartOrderHelper::setType($this->type);
+        $this->emit('changedOrderType');
     }
 
     public function checkout()
     {
         $contactData = $this->validate([
-            'email' => 'required|email',
-            'phone_number' => 'required',
-            'firstName' => 'required',
-            'lastName' => 'required',
+            'phone_number' => 'nullable',
+            'first_name' => 'nullable',
+            'last_name' => 'nullable',
         ]);
         CartOrderHelper::set('contact', $contactData);
 
@@ -92,9 +111,6 @@ class CheckoutComponent extends Component
             ]);
             $addressData = new AddressData($addressData);
             CartOrderHelper::set('address', $addressData->toArray());
-            if (Auth::user() && $this->save_address) {
-                StoreUserAddressAction::execute(Auth::user(), $addressData);
-            }
         }
         //TODO
         $this->date = '8/1/2021';
@@ -103,11 +119,9 @@ class CheckoutComponent extends Component
         CartOrderHelper::set('time', $this->time);
 
         $orderNumber = GenerateUniqueOrderNumberAction::execute();
-
         $orderData = new OrderData([
-            'first_name' => $this->firstName,
-            'last_name' => $this->lastName,
-            'email' => $this->email,
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
             'phone_number' => $this->phone_number,
             'type' => CartOrderHelper::getType(),
             'delivery' => CartOrderHelper::getDeliveryPrice(),
@@ -120,34 +134,16 @@ class CheckoutComponent extends Component
             'time' => Carbon::createFromFormat('H:i', CartOrderHelper::get('time')),
         ]);
 
-        if (Auth::user()) {
-            $orderData->user_id = Auth::id();
+        $order = StoreNewOrderAction::execute($orderData);
+        $order->update([
+            'status' => Confirmed::class
+        ]);
+        if ($order->email) {
+            Notification::route('mail',$order->email)
+                ->notify(new UserNewOrderNotification($order));
         }
-        StoreNewOrderAction::execute($orderData);
-
-
-        Notification::route('mail', app(GeneralSettings::class)->email)
-            ->notify(new AdminNewOrderNotification($order));
-        Notification::route('mail', $order->email)
-            ->notify(new UserNewOrderNotification($order));
         CartOrderHelper::clearEverything();
-        $this->redirect(route('checkout.thanks'));
-
+        $this->redirect(route('admin.orders.show',$order->id));
     }
 
-    public function update($field, $value)
-    {
-
-    }
-
-    public function selectAddress($address)
-    {
-        $address = UserAddress::findOrFail($address);
-        if (Auth::id() == $address->user_id) {
-            $this->address = $address->address;
-            $this->postal_code = $address->postal_code;
-            $this->city = $address->city;
-            $this->selectedAddress = $address->id;
-        }
-    }
 }

@@ -16,12 +16,11 @@
         }
     ],
     "require": {
-        "php": "^7.4",
+        "php": "^7.4|^8.0",
         "ext-json": "*",
         "bumbummen99/shoppingcart": "^3.0",
         "illuminate/support": "^8.0",
         "laravelcollective/html": "^6.2",
-        "resto2web/admin": "dev-develop",
         "resto2web/core": "dev-develop",
         "spatie/data-transfer-object": "^2.5",
         "spatie/laravel-model-states": "^2.0",
@@ -61,16 +60,5 @@
                 "Menu": "Resto2web\\Menu\\MenuFacade"
             }
         }
-    },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../core"
-        },
-        {
-            "type": "path",
-            "url": "../admin"
-        }
-    ]
-
+    }
 }

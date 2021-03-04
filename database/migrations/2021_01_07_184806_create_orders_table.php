@@ -20,12 +20,12 @@ class CreateOrdersTable extends Migration
             $table->string("status");
             $table->string('type');
             $table->string("first_name");
-            $table->string("last_name");
-            $table->string('email');
-            $table->string('phone_number');
-            $table->string('address');
-            $table->string('postal_code');
-            $table->string('city');
+            $table->string("last_name")->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->string('address')->nullable();
+            $table->string('postal_code')->nullable();
+            $table->string('city')->nullable();
             $table->time('time');
             $table->date('date');
             $table->decimal('delivery');
